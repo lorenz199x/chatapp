@@ -2,20 +2,17 @@ import firebase from 'firebase';
 
 class Backend {
   email = '';
-  password = '';
   uid = '';
   messagesRef = null;
-  loggedIn= null;
-
   // initialize Firebase Backend
   constructor() {
     var config = {
-      apiKey: "AIzaSyBTfmMu1Zk4Xt6r56vPRqUzB9HWmSnzHjc",
-      authDomain: "authentication-33f89.firebaseapp.com",
-      databaseURL: "https://authentication-33f89.firebaseio.com",
-      projectId: "authentication-33f89",
-      storageBucket: "authentication-33f89.appspot.com",
-      messagingSenderId: "895917340125"
+      apiKey: "AIzaSyD5qFWm9Do_-FRxKENhKOWOYaF7XIB2_Hs",
+      authDomain: "chat-app-92960.firebaseapp.com",
+      databaseURL: "https://chat-app-92960.firebaseio.com",
+      projectId: "chat-app-92960",
+      storageBucket: "chat-app-92960.appspot.com",
+      messagingSenderId: "918472852428"
     };
     firebase.initializeApp(config);
 
@@ -23,14 +20,8 @@ class Backend {
         if(user) {
             //this.setState({ loggedIn: true });
             this.setUid(user.uid);
+            this.setemail(user.email);
         }
-        //else {
-         // this.setState({ loggedIn: false });
-          // firebase.auth().signInWithEmailAndPassword(email, password)
-          //   .catch(() => {
-          //     firebase.auth().createUserWithEmailAndPassword(email, password)
-          // });
-       // }
     });
   }
 
@@ -42,6 +33,13 @@ class Backend {
     return this.uid;
   }
 
+  setemail(value){
+    this.email = value;
+  }
+
+  getemail(){
+    return this.email;
+  }
   // retrieve the messages from the Backend
   loadMessages(callback) {
     this.messagesRef = firebase.database().ref('messages');
@@ -54,7 +52,7 @@ class Backend {
         createdAt: new Date(message.createdAt),
         user: {
           _id: message.user._id,
-          name: message.user.name,
+          email: message.user.email,
         },
       });
     };

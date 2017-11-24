@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, Image, TouchableOpacity,} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, TouchableOpacity, BackAndroid,} from 'react-native';
 import { GiftedChat, Bubble, SystemMessage, Send, Avatar, } from 'react-native-gifted-chat';
 //import Backend from '../Backend';
 //import Home from './Home';
@@ -184,7 +184,8 @@ renderAvatar(props){
           
           user={{
           _id: Backend.getUid(),
-          name: this.props.name,
+          email: Backend.getemail(),
+          //email: this.props.email,
           }}
 
           renderFooter={this.renderFooter}

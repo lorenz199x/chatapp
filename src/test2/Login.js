@@ -6,18 +6,21 @@ import { Actions } from 'react-native-router-flux';
 
 
 export default class LoginForm extends Component {
-    // state = {
-    //     name: '',
-    //   };
-   state = { email: '', password: '', error: '', loading: false };
+   state = { email: '', password: '', error: '', loading: false, uid: '' };
 
    onButtonPress(){
        let { email, password } = this.state;
+       //let { currentUser } = firebase.auth();
+
        this.setState({ error: '', loading: true });
        firebase.auth().signInWithEmailAndPassword(email, password)
         .then(this.onLoginSuccess.bind(this))
         .catch(() => {
            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                firebase.database().ref(`/USERS_AUTH/`)
+                    .push({ email, password })
+            })
             .then(this.onLoginSuccess.bind(this))
             .catch(this.onLoginFailed.bind(this));
        });
@@ -81,16 +84,6 @@ export default class LoginForm extends Component {
                 </Text>
 
                 <CardSection>
-                    {/* <Button
-                        onPress={() => {
-                            Actions.chat({
-                            name: this.state.name,
-                            });
-                        }}
-                      >
-                      Log In
-                    </Button> */}
-
                     {this.renderButton()}
                 </CardSection>
             </Card>
